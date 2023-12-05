@@ -23,15 +23,8 @@ dotnet new console -n Solver
 dotnet sln "day$DAY.sln" add Solver/Solver.csproj
 dotnet new nunit -n Solver.Tests
 dotnet sln "day$DAY.sln" add Solver.Tests/Solver.Tests.csproj
+cp ../helpers/Program.cs Solver/
 cd ..
 
-echo "Creating and setting up day$DAY-fast..."
-mkdir "day$DAY-fast"
-cd "day$DAY-fast"
-dotnet new sln -n "day$DAY"
-dotnet new console -n Solver
-dotnet sln "day$DAY.sln" add Solver/Solver.csproj
-dotnet new nunit -n Solver.Tests
-dotnet sln "day$DAY.sln" add Solver.Tests/Solver.Tests.csproj
-cd ..
-
+echo "Copying to day$DAY-fast..."
+cp -r "day$DAY-clean" "day$DAY-fast"

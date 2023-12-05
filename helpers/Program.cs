@@ -1,3 +1,5 @@
+namespace AoC;
+
 public class Program
 {
     private static void Main(string[] args)
@@ -10,9 +12,9 @@ public class Program
     private static void SolvePart1(string[] lines)
     {
         int total = 0;
-        foreach (string line in lines)
+        for (int y = 0; y < lines.Length; y++)
         {
-
+            string line = lines[y];
         }
         Console.WriteLine($"Part 1: {total}");
     }
