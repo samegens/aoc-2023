@@ -23,7 +23,9 @@ dotnet new console -n Solver
 dotnet sln "day$DAY.sln" add Solver/Solver.csproj
 dotnet new nunit -n Solver.Tests
 dotnet sln "day$DAY.sln" add Solver.Tests/Solver.Tests.csproj
-cp ../helpers/Program.cs Solver/
+dotnet add Solver.Tests/Solver.Tests.csproj reference Solver/Solver.csproj
+touch Solver/input.txt
+cp ../helpers/*.cs Solver/
 cd ..
 
 echo "Copying to day$DAY-fast..."
