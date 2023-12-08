@@ -21,9 +21,9 @@ cd "day$DAY-clean"
 dotnet new sln -n "day$DAY"
 dotnet new console -n Solver
 dotnet sln "day$DAY.sln" add Solver/Solver.csproj
-dotnet new nunit -n Solver.Tests
-dotnet sln "day$DAY.sln" add Solver.Tests/Solver.Tests.csproj
-dotnet add Solver.Tests/Solver.Tests.csproj reference Solver/Solver.csproj
+dotnet new nunit -n SolverTests
+dotnet sln "day$DAY.sln" add SolverTests/SolverTests.csproj
+dotnet add SolverTests/SolverTests.csproj reference Solver/Solver.csproj
 touch Solver/input.txt
 cp ../helpers/*.cs Solver/
 cd ..
