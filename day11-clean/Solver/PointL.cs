@@ -1,17 +1,19 @@
-public class Point
-{
-    public int X { get; set; }
-    public int Y { get; set; }
+namespace AoC;
 
-    public Point(int x, int y)
+public class PointL
+{
+    public long X { get; set; }
+    public long Y { get; set; }
+
+    public PointL(long x, long y)
     {
         X = x;
         Y = y;
     }
 
-    public Point Move(int dX, int dY)
+    public PointL Move(int dX, int dY)
     {
-        return new Point(X + dX, Y + dY);
+        return new PointL(X + dX, Y + dY);
     }
 
     public override string ToString()
@@ -21,7 +23,7 @@ public class Point
 
     public override bool Equals(object? obj)
     {
-        if (obj is Point otherPoint)
+        if (obj is PointL otherPoint)
         {
             return X == otherPoint.X && Y == otherPoint.Y;
         }
@@ -30,7 +32,12 @@ public class Point
 
     public override int GetHashCode()
     {
-        return X * 17 + Y;
+        return (int)X * 17 + (int)Y;
+    }
+
+    public long GetManhattanDistanceTo(PointL other)
+    {
+        return Math.Abs(other.X - X) + Math.Abs(other.Y - Y);
     }
 
     internal void Print()
