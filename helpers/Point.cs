@@ -9,6 +9,12 @@ public class Point
         Y = y;
     }
 
+    public Point(Point point)
+    {
+        X = point.X;
+        Y = point.Y;
+    }
+
     public Point Move(int dX, int dY)
     {
         return new Point(X + dX, Y + dY);
