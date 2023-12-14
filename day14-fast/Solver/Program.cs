@@ -227,7 +227,7 @@ public class Program
     private static void Main(string[] args)
     {
         string[] lines = File.ReadAllLines("input.txt");
-        // SolvePart1(lines);
+        SolvePart1(lines);
         SolvePart2(lines);
     }
 
@@ -278,7 +278,6 @@ public class Program
                     total += weight;
                 }
             }
-            Console.WriteLine();
         }
 
         Console.WriteLine($"Part 1: {total}");
@@ -312,7 +311,6 @@ public class Program
             {
                 if (fields[i].Equals(field))
                 {
-                    Console.WriteLine($"Zelfde veld gevonden na {nrTilts}, zelfde als veld {i}");
                     indexOriginal = i;
                     indexFirstCopy = nrTilts;
                     isDone = true;
@@ -324,7 +322,6 @@ public class Program
 
         long cycleTime = indexFirstCopy - indexOriginal;
         long indexToUse = ((4000000000L - indexOriginal) % cycleTime) + indexOriginal;
-        Console.WriteLine($"indexToUse = {indexToUse}");
         field = fields[(int)indexToUse];
         total = field.GetLoad();
 
