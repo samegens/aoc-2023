@@ -20,6 +20,11 @@ public class Point
         return new Point(X + dX, Y + dY);
     }
 
+    public Point Move(Point delta)
+    {
+        return new Point(X + delta.X, Y + delta.Y);
+    }
+
     public override string ToString()
     {
         return $"({X},{Y})";
