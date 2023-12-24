@@ -1,3 +1,5 @@
+namespace AoC;
+
 public class Point
 {
     public int X { get; set; }

@@ -1,3 +1,5 @@
+namespace AoC;
+
 public class Point3d
 {
     public int X { get; set; }

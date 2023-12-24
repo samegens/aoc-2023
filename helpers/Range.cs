@@ -1,3 +1,5 @@
+namespace AoC;
+
 public class Range
 {
     public long Start { get; private set; }

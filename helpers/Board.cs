@@ -1,3 +1,5 @@
+namespace AoC;
+
 public class Board
 {
     private readonly char[,] _tiles;

@@ -1,4 +1,6 @@
-class Box
+namespace AoC;
+
+public class Rect
 {
     private readonly Point _topLeft;
     private readonly Point _bottomRight;
@@ -11,7 +13,7 @@ class Box
 
     public Point BottomRight => _bottomRight;
 
-    public Box(Point topLeft, Point bottomRight)
+    public Rect(Point topLeft, Point bottomRight)
     {
         _topLeft = topLeft;
         _bottomRight = bottomRight;
