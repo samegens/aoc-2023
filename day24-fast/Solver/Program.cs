@@ -1,3 +1,5 @@
+using Microsoft.Z3;
+
 namespace AoC;
 
 public struct PointD
@@ -120,5 +122,76 @@ public class Program
 
     private static void SolvePart2(string[] lines)
     {
+        List<Point3d> points = new();
+        List<Point3d> velos = new();
+        for (int i = 0; i < lines.Length; i++)
+        {
+            string line = lines[i];
+            var parts = line.Split('@');
+            Point3d p = new(long.Parse(parts[0].Split(',')[0].Trim()), long.Parse(parts[0].Split(',')[1].Trim()), long.Parse(parts[0].Split(',')[2].Trim()));
+            points.Add(p);
+            Point3d v = new(long.Parse(parts[1].Split(',')[0].Trim()), long.Parse(parts[1].Split(',')[1].Trim()), long.Parse(parts[1].Split(',')[2].Trim()));
+            velos.Add(v);
+        }
+
+        (long x, long y, long z) = FindRockStartPosition(points, velos);
+        Console.WriteLine($"Part 2: {x + y + z}");
+    }
+
+    private static (long x, long y, long z) FindRockStartPosition(List<Point3d> points, List<Point3d> velos)
+    {
+        // Borrowed without permission from https://pastebin.com/fkpZWn8X
+
+        var ctx = new Context();
+        var solver = ctx.MkSolver();
+
+        // Coordinates of the stone
+        var x = ctx.MkIntConst("x");
+        var y = ctx.MkIntConst("y");
+        var z = ctx.MkIntConst("z");
+
+        // Velocity of the stone
+        var vx = ctx.MkIntConst("vx");
+        var vy = ctx.MkIntConst("vy");
+        var vz = ctx.MkIntConst("vz");
+
+        // For each iteration, we will add 3 new equations and one new condition to the solver.
+        // We want to find 9 variables (x, y, z, vx, vy, vz, t0, t1, t2) that satisfy all the equations, so a system of 9 equations is enough.
+        for (var i = 0; i < 3; i++)
+        {
+            var t = ctx.MkIntConst($"t{i}"); // time for the stone to reach the hail
+
+            var pos = points[i];
+            var px = ctx.MkInt(Convert.ToInt64(pos.X));
+            var py = ctx.MkInt(Convert.ToInt64(pos.Y));
+            var pz = ctx.MkInt(Convert.ToInt64(pos.Z));
+
+            var velo = velos[i];
+            var pvx = ctx.MkInt(Convert.ToInt64(velo.X));
+            var pvy = ctx.MkInt(Convert.ToInt64(velo.Y));
+            var pvz = ctx.MkInt(Convert.ToInt64(velo.Z));
+
+            var xLeft = ctx.MkAdd(x, ctx.MkMul(t, vx)); // x + t * vx
+            var yLeft = ctx.MkAdd(y, ctx.MkMul(t, vy)); // y + t * vy
+            var zLeft = ctx.MkAdd(z, ctx.MkMul(t, vz)); // z + t * vz
+
+            var xRight = ctx.MkAdd(px, ctx.MkMul(t, pvx)); // px + t * pvx
+            var yRight = ctx.MkAdd(py, ctx.MkMul(t, pvy)); // py + t * pvy
+            var zRight = ctx.MkAdd(pz, ctx.MkMul(t, pvz)); // pz + t * pvz
+
+            solver.Add(t >= 0); // time should always be positive - we don't want solutions for negative time
+            solver.Add(ctx.MkEq(xLeft, xRight)); // x + t * vx = px + t * pvx
+            solver.Add(ctx.MkEq(yLeft, yRight)); // y + t * vy = py + t * pvy
+            solver.Add(ctx.MkEq(zLeft, zRight)); // z + t * vz = pz + t * pvz
+        }
+
+        solver.Check();
+        var model = solver.Model;
+
+        var rx = model.Eval(x);
+        var ry = model.Eval(y);
+        var rz = model.Eval(z);
+
+        return (long.Parse(rx.ToString()), long.Parse(ry.ToString()), long.Parse(rz.ToString()));
     }
 }

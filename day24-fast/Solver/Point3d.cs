@@ -2,18 +2,18 @@ namespace AoC;
 
 public class Point3d
 {
-    public int X { get; set; }
-    public int Y { get; set; }
-    public int Z { get; set; }
+    public double X { get; set; }
+    public double Y { get; set; }
+    public double Z { get; set; }
 
-    public Point3d(int x, int y, int z)
+    public Point3d(double x, double y, double z)
     {
         X = x;
         Y = y;
         Z = z;
     }
 
-    public Point3d Move(int dX, int dY, int dZ)
+    public Point3d Move(double dX, double dY, double dZ)
     {
         return new Point3d(X + dX, Y + dY, Z + dZ);
     }
