@@ -1,4 +1,3 @@
-
 namespace AoC;
 
 enum Direction
@@ -9,7 +8,6 @@ enum Direction
 
 public class Program
 {
-
     static Dictionary<Direction, Point> directions = new()
     {
         [Direction.Up] = new Point(0, -1),
