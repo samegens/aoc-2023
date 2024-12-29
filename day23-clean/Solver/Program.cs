@@ -64,5 +64,15 @@ public class Program
 
     private static void SolvePart2(string[] lines)
     {
+        Board board = new(lines);
+
+        Point start = new(1, 0);
+        Point end = new(board.Width - 2, board.Height - 1);
+        GraphBuilder builder = new(board, start, end);
+        builder.Build();
+        LongestPathFinder finder = new(builder.Graph, builder.StartNode!, builder.EndNode!);
+
+        int total = builder.NrStepsToFirstNode + finder.Go() + builder.NrStepsFromEndNode;
+        Console.WriteLine($"Part 2: {total}");
     }
 }
